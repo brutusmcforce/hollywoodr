@@ -4,6 +4,7 @@ var $;
 var NUM_ELEMS_TO_CENSOR = 10;
 var AD_INTERVAL_IN_MINUTES = 1;
 
+var stealACar = "HmZm8vNHBSU";
 var excellentTrailers = [
     "qvfU5gzAmHg", // Titanic: The Legend Goes On... (2000)
     "bEOxyoJcNtM", // Superbabies: Baby Geniuses 2 (2004)
@@ -20,7 +21,7 @@ var excellentTrailers = [
 
 function init() {
     initLightbox();
-    showVideo("HmZm8vNHBSU");
+    showVideo(stealACar);
     censor();
     advertise();
 }
