@@ -10,7 +10,7 @@ function init() {
 }
 
 function censor() {
-    var elems = $("div:not(#hwdr_lightbox), p").get().sort(function(){ 
+    var elems = $("div:not(#hwdr_lightbox), p, img").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
     }).slice(0, NUM_ELEMS_TO_CENSOR)
 
