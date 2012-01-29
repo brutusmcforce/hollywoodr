@@ -14,24 +14,15 @@ function initLightbox() {
         .append('<div id="hwdr_overlay"></div>')
         .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
 
-    $('#hwdr_overlay').css('position', 'absolute');
-    $('#hwdr_overlay').css('top', '0');
-    $('#hwdr_overlay').css('left', '0');
-    $('#hwdr_overlay').css('background-color', '#000');
-    $('#hwdr_overlay').css('width', '100%');
-    $('#hwdr_overlay').css('height', '100%');
-    $('#hwdr_overlay').css('z-index', '999');
-    $('#hwdr_overlay').hide();
-
-    $('#hwdr_overlay').click(function(e){
-        e.preventDefault();
-        $('#hwdr_lightbox').fadeTo(100, 0, function(){
-            $(this).remove();
-            $('#hwdr_overlay').fadeTo(250, 0, function(){
-                $(this).remove();
-            });
-        });
-    });
+    var ho = $('#hwdr_overlay');
+    ho.css('position', 'absolute');
+    ho.css('top', '0');
+    ho.css('left', '0');
+    ho.css('background-color', '#000');
+    ho.css('width', '100%');
+    ho.css('height', '100%');
+    ho.css('z-index', '999');
+    ho.hide();
 
     var lb = $('#hwdr_lightbox');
 
@@ -44,6 +35,16 @@ function initLightbox() {
     lb.css('top', (($(window).height() - lb.outerHeight()) / 2) + $(window).scrollTop() + 'px');
     lb.css('left', (($(window).width() - lb.outerWidth()) / 2) + $(window).scrollLeft() + 'px');
     lb.hide();
+
+    ho.click(function(e){
+        e.preventDefault();
+        lb.fadeTo(100, 0, function(){
+            $(this).remove();
+            ho.fadeTo(250, 0, function(){
+                $(this).remove();
+            });
+        });
+    });
 }
 
 function showVideo(url) {
