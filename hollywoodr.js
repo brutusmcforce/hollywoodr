@@ -16,14 +16,10 @@ function censor() {
 
     $(elems).css('background-color', '#000');
     $(elems).css('color', '#f00');
-    $(elems).each(function() {
-        $(this).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
-    });
+    $(elems).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
 }
 
 function initLightbox() {
-    var topPos = $(window).scrollTop() + 50;
-
     $('body')
         .append('<div id="hwdr_overlay"></div>')
         .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
