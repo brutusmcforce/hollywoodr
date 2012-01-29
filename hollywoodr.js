@@ -152,10 +152,9 @@ function showVideo(videoId) {
         swfobj.src = "//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js";
         swfobj.onload = function() {
             loadedSwfobject = true;
-            checkDependencies();
         }
         document.body.appendChild(swfobj);
-    }
+    } 
 
 
     if (!window.jQuery) {
@@ -163,11 +162,12 @@ function showVideo(videoId) {
         jq.src = "//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js";
         jq.onload = function() {
             $ = jQuery.noConflict(true);
+            $(init);
         }
 
         document.body.appendChild(jq);
+    } else {
+        $(init);
     }
-
-    $(init);
 })()
 })(window, document);
