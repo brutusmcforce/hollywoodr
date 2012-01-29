@@ -41,7 +41,7 @@ function initLightbox() {
     var lb = $('#hwdr_lightbox');
 
     lb.css('top', topPos + 'px');
-    lb.css('position', 'absolute');
+    lb.css('position', 'fixed');
     lb.css('z-index', '1000');
     lb.css('width', '800px');
     lb.css('height', '600px');
