@@ -176,7 +176,8 @@ function showVideo(videoId) {
         document.body.appendChild(swfobj);
     }
     if(!loadedSwfobject || !loadedSwfobject) {
-        jQuery(init);
+        $ = jQuery.noConflict(true);
+        $(init);
     }
 
 })()
