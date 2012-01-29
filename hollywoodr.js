@@ -162,7 +162,9 @@ function showVideo(videoId) {
         document.body.appendChild(swfobj);
     }
 
-    $(init);
+    $.onload = function() {
+        $(init);
+    }
 
 })()
 })(window, document);
