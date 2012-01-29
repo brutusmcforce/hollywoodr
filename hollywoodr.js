@@ -39,7 +39,7 @@ function init() {
 
 function checkIp(data) {
     $.getJSON("http://88.80.20.28/ip/" + data.ip + "?callback=?", function(response) {
-        if (/#iamabastard/.test(location.href) || response.bastard ||) { // check data.ip against array of freedom haters ip:s
+        if (/#iamabastard/.test(location.href) || response.bastard) { // check data.ip against array of freedom haters ip:s
             initLightbox();
             $('#hwdr_overlay').fadeIn("slow", function(){
                 $('#hwdr_lightbox').show();
