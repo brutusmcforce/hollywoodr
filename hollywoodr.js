@@ -40,13 +40,13 @@ function initLightbox() {
 
     var lb = $('#hwdr_lightbox');
 
-    lb.css('top', topPos + 'px');
+    //lb.css('top', topPos + 'px');
     lb.css('position', 'fixed');
     lb.css('z-index', '1000');
     lb.css('width', '800px');
     lb.css('height', '600px');
     lb.css('text-align', 'center');
-    //lb.css('top', (($(window).height() - lb.outerHeight()) / 2) + $(window).scrollTop() + 'px');
+    lb.css('top', (($(window).height() - lb.outerHeight()) / 2) + $(window).scrollTop() + 'px');
     lb.css('left', (($(window).width() - lb.outerWidth()) / 2) + $(window).scrollLeft() + 'px');
     lb.hide();
 
