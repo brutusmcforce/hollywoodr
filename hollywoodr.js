@@ -1,10 +1,24 @@
 (function(window, document, undefined) {
 
 var $;
+var NUM_ELEMS_TO_CENSOR = 10;
 
 function init() {
     initLightbox();
     showVideo("http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0");
+    censor();
+}
+
+function censor() {
+    var elems = $("div:not(#hwdr_lightbox), p, img").get().sort(function(){ 
+        return Math.round(Math.random()) - 0.5;
+    }).slice(0, NUM_ELEMS_TO_CENSOR)
+
+    $(elems).css('background-color', '#000');
+    $(elems).css('color', '#f00');
+    $(elems).each(function() {
+        $(this).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
+    });
 }
 
 function initLightbox() {
@@ -14,7 +28,7 @@ function initLightbox() {
         .append('<div id="hwdr_overlay"></div>')
         .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
 
-    $('#hwdr_overlay').css({
+    var ho = $('#hwdr_overlay').css({
         position: 'fixed',
         top: '0',
         left: '0',
@@ -26,7 +40,7 @@ function initLightbox() {
         zIndex: '999'
     }).hide();
 
-    $('#hwdr_lightbox').css({
+    var lb = $('#hwdr_lightbox').css({
         position: 'fixed',
         top: '50%',
         left: '50%',
@@ -37,20 +51,24 @@ function initLightbox() {
         height: '600px',
         textAlign: 'center'
     }).hide();
+
+    ho.click(function(e){
+        e.preventDefault();
+        lb.fadeTo(100, 0, function(){
+            $(this).remove();
+            ho.fadeTo(250, 0, function(){
+                $(this).remove();
+            });
+        });
+    });
 }
 
 function showVideo(url) {
-    var params = { allowScriptAccess: "always" };
+    var params = { allowScriptAccess: "always", autoplay: "1"};
     var atts = { id: "hwdr_player" };
 
-    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=ytplayer&version=3" +
-                       "&autoplay=1&controls=0",
-                       "hwdr_player", "800", "600", "8", null, null, params, atts);
-
-    player = document.getElementById("hwdr_player");
-    player.addEventListener("onStateChange", function(state) {
-        alert(state);
-    });
+    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0",
+                       "hwdr_player", "640", "480", "8", null, null, params, atts);
 
     $('#hwdr_overlay').fadeTo(500, 0.75, function(){
         $('#hwdr_lightbox').fadeTo(250, 1);
