@@ -32,7 +32,15 @@ function censor() {
 
     $(elems).css('background-color', '#000');
     $(elems).css('color', '#f00');
-    $(elems).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
+    $(elems).each(function() {
+        var elem = $(this);
+        if(elem.is('img')) {
+            $(this).replaceWith('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
+        }
+        else {
+            $(this).html('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
+        }
+    });
 }
 
 function advertise() {
