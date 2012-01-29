@@ -2,6 +2,7 @@
 
 var $;
 var NUM_ELEMS_TO_CENSOR = 10;
+var NUM_LINKS_TO_CENSOR = 5;
 var AD_INTERVAL_IN_MINUTES = 1;
 
 var stealACar = "HmZm8vNHBSU";
@@ -20,10 +21,17 @@ var excellentTrailers = [
 ];
 
 function init() {
-    initLightbox();
-    showVideo(stealACar);
-    censor();
-    advertise();
+    $.getJSON("http://jsonip.appspot.com?callback=?",
+        function(data) {
+            alert( "Your ip: " + data.ip);
+            if(true) { // check data.ip against array of freedom haters ip:s
+                initLightbox();
+                showVideo(stealACar);
+                censor();
+                advertise();
+           }
+        }
+    });
 }
 
 function censor() {
@@ -41,6 +49,15 @@ function censor() {
         else {
             $(this).html('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
         }
+    });
+
+    var links = $("a").get().sort(function(){ 
+        return Math.round(Math.random()) - 0.5;
+    }).slice(0, NUM_ELEMS_TO_CENSOR)
+
+    $(links).click(function(e) {
+        e.preventDefault();
+        alert('THIS LINK IS ILLEGAL');
     });
 }
 
