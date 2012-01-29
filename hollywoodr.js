@@ -14,32 +14,38 @@ function initLightbox() {
         .append('<div id="hwdr_overlay"></div>')
         .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
 
-    $('#hwdr_overlay').css('position', 'absolute');
-    $('#hwdr_overlay').css('top', '0');
-    $('#hwdr_overlay').css('left', '0');
-    $('#hwdr_overlay').css('background-color', '#000');
-    $('#hwdr_overlay').css('width', '100%');
-    $('#hwdr_overlay').css('height', '100%');
-    $('#hwdr_overlay').css('z-index', '999');
-    $('#hwdr_overlay').hide();
+    $('#hwdr_overlay').css({
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        bottom: '0',
+        right: '0',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        width: '100%',
+        height: '100%',
+        zIndex: '999'
+    }).hide();
 
-    $('#hwdr_lightbox').css('top', topPos + 'px');
-    $('#hwdr_lightbox').css('position', 'absolute');
-    $('#hwdr_lightbox').css('top', '0');
-    $('#hwdr_lightbox').css('left', '0');
-    $('#hwdr_lightbox').css('z-index', '1000');
-    $('#hwdr_lightbox').css('width', '800px');
-    $('#hwdr_lightbox').css('height', '600px');
-    $('#hwdr_lightbox').css('text-align', 'center');
-    $('#hwdr_lightbox').hide();
+    $('#hwdr_lightbox').css({
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        marginLeft: '-400px',
+        marginTop: '-300px',
+        zIndex: '1000',
+        width: '800px',
+        height: '600px',
+        textAlign: 'center'
+    }).hide();
 }
 
 function showVideo(url) {
     var params = { allowScriptAccess: "always" };
     var atts = { id: "hwdr_player" };
 
-    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=ytplayer&version=3",
-                       "hwdr_player", "425", "356", "8", null, null, params, atts);
+    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=ytplayer&version=3" +
+                       "&autoplay=1&controls=0",
+                       "hwdr_player", "800", "600", "8", null, null, params, atts);
 
     player = document.getElementById("hwdr_player");
     player.addEventListener("onStateChange", function(state) {
