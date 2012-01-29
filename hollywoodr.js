@@ -146,48 +146,33 @@ function showVideo(videoId) {
 }
 
 (function() {
-    var attempts = 30;
+    var loadedjQuery = false,
+        loadedSwfobject = false;
 
-    var old_jQuery;
-    if (typeof(jQuery) != "undefined") {
-        if (typeof(jQuery.noConflict) == "function") {
-            old_jQuery = jQuery;
-            delete jQuery;
+    function checkDependencies() {
+        if (loadedSwfobject && loadedjQuery) {
+            $(init);
         }
     }
 
-    var addLibs = function(url) {
-        var head = document.getElementsByTagName("head");
-        if (head.length == 0) {
-            if (attempts-- > 0) setTimeout(addLibs, 100);
-            return;
+    if (typeof(jQuery) == undefined || typeof(jQuery) != "function" || jQuery("*") === null) {
+        var jq = document.createElement("script");
+        jq.src = "//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js";
+        jq.onload = function() {
+            $ = jQuery.noConflict(true);
+            loadedjQuery = true;
+            checkDependencies();
         }
-
-        var node = document.createElement("script");
-        node.src = url;
-
-        head[0].appendChild(node);
-
-        checkLibs();
+        document.body.appendChild(jq);
     }
-
-    var checkLibs = function() {
-        if (typeof(jQuery) == "undefined" || typeof(jQuery) != "function" || jQuery("*") === null) {
-            if (attempts-- > 0) setTimeout(checkLibs, 100);
-            return;
+    if (typeof(swfobject) == "undefined") {
+        var swfobj = document.createElement("script");
+        swfobj.src = "//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js";
+        swfobj.onload = function() {
+            loadedSwfobject = true;
+            checkDependencies();
         }
-        $ = jQuery.noConflict(true);
-        if (typeof old_jQuery != "undefined")
-            jQuery = old_jQuery;
-
-        $(init);
+        document.body.appendChild(swfobj);
     }
-
-    addLibs("//www.google.com/jsapi");
-    addLibs("//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js");
-
-    if(typeof(swfobject) == "undefined") {
-        addLibs("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
-    }
-    })()
+})()
 })(window, document);
