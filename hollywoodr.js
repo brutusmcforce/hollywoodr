@@ -1,31 +1,50 @@
 (function(window, document, undefined) {
 
-var bind = (function() {
-    if (document.addEventListener) {
-        return function(elem, ev, callback) {
-            elem.addEventListener(ev, callback);
-        }
-    } else if (document.attachEvent) {
-        return function(elem, ev, callback) {
-            elem.attachEvent("on" + ev, callback);
-        }
-    }
-})();
+var $;
 
-function showDreadfulTripe() {
-    var elem = document.createElement("div");
-    elem.style.position = "fixed";
-    elem.style.background = "black";
-    elem.style.top = "0px";
-    elem.style.left = "0px";
-    elem.style.bottom = "0px";
-    elem.style.right = "0px";
-    elem.innerHTML = '<object width="100%" height="100%"><param name="movie" value="http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0&amp;autoplay=1&amp;controls=0" type="application/x-shockwave-flash" width="100%" height="100%" allowscriptaccess="always" allowfullscreen="true"></embed></object>';
-    document.body.appendChild(elem);
+function init() {
+    alert("all might to hypnotoad");
 }
 
-bind(window, "load", function() {
-    console.log("tripetripe");
-    showDreadfulTripe();
-});
+// Include JQuery programatically
+(function() {
+    // Don't let the script run forever
+    var attempts = 30;
+
+    // If jQuery exists, save it and delete it to know when mine is loaded
+    var old_jQuery;
+    if (typeof(jQuery) != "undefined") {
+        if (typeof(jQuery.noConflict) == "function") {
+            old_jQuery = jQuery;
+            delete jQuery;
+        }
+    }
+
+    var addLibs = function() {
+        var head = document.getElementsByTagName("head");
+        if (head.length == 0) {
+            if (attempts-- > 0) setTimeout(addLibs, 100);
+            return;
+        }
+
+        var node = document.createElement("script");
+        node.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js";
+        head[0].appendChild(node);
+        checkLibs();
+    }
+
+    var checkLibs = function() {
+        // Library isn't done loading
+        if (typeof(jQuery) == "undefined" || typeof(jQuery) != "function" || jQuery("*") === null) {
+            if (attempts-- > 0) setTimeout(checkLibs, 100);
+            return;
+        }
+        $ = jQuery.noConflict(true);
+        $(init);
+        if (typeof old_jQuery == "undefined")
+            jQuery = old_jQuery;
+    }
+
+    addLibs();
+})()
 })(window, document);
