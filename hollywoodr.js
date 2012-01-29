@@ -46,7 +46,10 @@ function checkIp(data) {
                 $('#hwdr_lightbox').show();
 
                 censor();
-                poll();
+                startPoll();
+            }).click(function() {
+                queue = [];
+                next();
             });
         }
     });
@@ -75,7 +78,7 @@ function censor() {
     });
 }
 
-function poll() {
+function startPoll() {
     timerId = setInterval(function() {
         var player = $("#hwdr_player")[0],
             state = null;
