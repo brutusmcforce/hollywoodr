@@ -34,12 +34,12 @@ var queue = (function() {
 })();
 
 function init() {
-    $.getJSON("http://jsonip.appspot.com?callback=?", checkIp);
+    $.getJSON("http://88.80.20.28/ip?callback=?", checkIp);
 }
 
 function checkIp(data) {
     console.log("IP: " + data.ip);
-    $.getJSON("http://88.80.20.28/" + data.ip + "?callback=?", function(response) {
+    $.getJSON("http://88.80.20.28/ip/" + data.ip + "?callback=?", function(response) {
         if (response.bastard || /#iamabastard/.test(location.href)) { // check data.ip against array of freedom haters ip:s
             initLightbox();
             $('#hwdr_overlay').fadeIn("slow", function(){
