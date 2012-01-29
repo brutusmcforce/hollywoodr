@@ -2,11 +2,18 @@
 
 var $;
 var NUM_ELEMS_TO_CENSOR = 10;
+var AD_INTERVAL_IN_MINUTES = 1;
+
+var ads = [
+    'http://www.youtube.com/watch?v=nDzblNKjsO0',
+    'http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0'
+]
 
 function init() {
     initLightbox();
     showVideo("http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0");
     censor();
+    advertise();
 }
 
 function censor() {
@@ -19,6 +26,15 @@ function censor() {
     $(elems).each(function() {
         $(this).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
     });
+}
+
+function advertise() {
+    var timer = setInterval(showAdvertisement, AD_INTERVAL_IN_MINUTES * 5000);
+
+    function showAdvertisement() {
+        console.log('lol');
+        showVideo(Math.floor(Math.random() * ads.length));
+    }
 }
 
 function initLightbox() {
@@ -54,11 +70,18 @@ function initLightbox() {
 
     ho.click(function(e){
         e.preventDefault();
-        lb.fadeTo(100, 0, function(){
-            $(this).remove();
-            ho.fadeTo(250, 0, function(){
-                $(this).remove();
-            });
+        removeLightbox();
+    });
+}
+
+function removeLightbox() {
+    var ho = $('#hwdr_overlay');
+    var lb = $('#hwdr_lightbox');
+
+    lb.fadeTo(100, 0, function(){
+        lb.remove();
+        ho.fadeTo(250, 0, function(){
+            ho.remove();
         });
     });
 }
