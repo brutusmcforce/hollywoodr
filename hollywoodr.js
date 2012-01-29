@@ -179,7 +179,7 @@ function showVideo(videoId) {
             return;
         }
         $ = jQuery.noConflict(true);
-        if (typeof old_jQuery == "undefined")
+        if (typeof old_jQuery != "undefined")
             jQuery = old_jQuery;
 
         $(init);
