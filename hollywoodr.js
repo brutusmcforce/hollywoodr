@@ -31,7 +31,6 @@ function censor() {
     $(elems).css('background-color', '#000');
     $(elems).css('color', '#f00');
     $(elems).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
-    });
 }
 
 function initLightbox() {
