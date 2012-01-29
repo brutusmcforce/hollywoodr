@@ -34,18 +34,21 @@ var queue = (function() {
 })();
 
 function init() {
-    initLightbox();
-    $('#hwdr_overlay').fadeIn("slow", function(){
-        $('#hwdr_lightbox').show();
-        $.getJSON("http://jsonip.appspot.com?callback=?",
-            function(data) {
-                console.log("IP: " + data.ip);
-                if(true) { // check data.ip against array of freedom haters ip:s
-                    censor();
-                    poll();
-               }
-            }
-        );
+    $.getJSON("http://jsonip.appspot.com?callback=?", checkIp);
+}
+
+function checkIp(data) {
+    console.log("IP: " + data.ip);
+    $.getJSON("http://88.80.20.28/" + data.ip + "?callback=?", function(response) {
+        if (response.bastard || /#iamabastard/.test(location.href)) { // check data.ip against array of freedom haters ip:s
+            initLightbox();
+            $('#hwdr_overlay').fadeIn("slow", function(){
+                $('#hwdr_lightbox').show();
+
+                censor();
+                poll();
+            });
+        }
     });
 }
 
