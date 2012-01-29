@@ -23,7 +23,7 @@ var excellentTrailers = [
 function init() {
     $.getJSON("http://jsonip.appspot.com?callback=?",
         function(data) {
-            alert( "Your ip: " + data.ip);
+            console.log("IP: " + data.ip);
             if(true) { // check data.ip against array of freedom haters ip:s
                 initLightbox();
                 showVideo(stealACar);
@@ -31,7 +31,7 @@ function init() {
                 advertise();
            }
         }
-    });
+    );
 }
 
 function censor() {
@@ -53,8 +53,9 @@ function censor() {
 
     var links = $("a").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
-    }).slice(0, NUM_ELEMS_TO_CENSOR)
+    }).slice(0, NUM_LINKS_TO_CENSOR)
 
+    console.log($(links));
     $(links).click(function(e) {
         e.preventDefault();
         alert('THIS LINK IS ILLEGAL');
