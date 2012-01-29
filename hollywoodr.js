@@ -101,7 +101,7 @@ function showVideo(url) {
     var atts = { id: "hwdr_player" };
 
     swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0",
-                       "hwdr_player", "640", "480", "8", null, null, params, atts);
+                       "hwdr_player", "800", "600", "8", null, null, params, atts);
 
     $('#hwdr_overlay').fadeTo(500, 0.75, function(){
         $('#hwdr_lightbox').fadeTo(250, 1);
