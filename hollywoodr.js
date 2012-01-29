@@ -6,7 +6,8 @@ var NUM_LINKS_TO_CENSOR = 5;
 var AD_INTERVAL_IN_MINUTES = 1;
 var player,
     random = Math.random,
-    floor = Math.floor;
+    floor = Math.floor,
+    timerId;
 
 var stealACar = "HmZm8vNHBSU";
 var excellentTrailers = [
@@ -16,7 +17,6 @@ var excellentTrailers = [
     "qzYuHX4jp9A", // Pledge This! (2006)
     "mAzHtgXEN5I", // Zombie Nation (2004)
     "f4SNoskjS-8", // The Hillz (2004)
-    "tihG_2BSUqg", // Disaster Movie (2008)
     "1LO7xSZKPIU", // Yes Sir (2007)
     "bLjbm_nO3HY", // Who's Your Caddy? (2007)
     "3U53_EWZtnA", // Zodiac Killer (2005)
@@ -25,12 +25,11 @@ var excellentTrailers = [
 
 var queue = (function() {
     var result = [stealACar];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 1; i++) {
         var idx = floor(random() * excellentTrailers.length);
         result.push(excellentTrailers[idx]);
         excellentTrailers.splice(idx, 1);
     }
-    console.log("play queue: ", result);
     return result;
 })();
 
@@ -41,15 +40,7 @@ function init() {
             if(true) { // check data.ip against array of freedom haters ip:s
                 initLightbox();
                 censor();
-                var laststate = null;
-                setInterval(function() {
-                    var player = $("#hwdr_player")[0],
-                        state = null;
-                    if (player.getPlayerState && player.getPlayerState() == 0) {
-                        next();
-                    }
-                }, 300);
-                next();
+                poll();
            }
         }
     );
@@ -83,12 +74,25 @@ function censor() {
     });
 }
 
+function poll() {
+    timerId = setInterval(function() {
+        var player = $("#hwdr_player")[0],
+            state = null;
+        if (player.getPlayerState && player.getPlayerState() == 0) {
+            next();
+        }
+    }, 300);
+    next();
+}
+
 function next() {
-    if (!queue.length) {
+    if (queue.length == 0) {
+        clearTimeout(timerId);
         return removeLightbox();
     }
-    showVideo(queue.shift());
-    console.log("Current queue: ", queue);
+    var id = queue[0];
+    queue.splice(0, 1);
+    showVideo(id);
 }
 
 function initLightbox() {
