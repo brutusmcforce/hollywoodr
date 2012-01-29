@@ -25,7 +25,7 @@ var excellentTrailers = [
 
 var queue = (function() {
     var result = [stealACar];
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 3; i++) {
         var idx = floor(random() * excellentTrailers.length);
         result.push(excellentTrailers[idx]);
         excellentTrailers.splice(idx, 1);
@@ -34,34 +34,32 @@ var queue = (function() {
 })();
 
 function init() {
-    $.getJSON("http://jsonip.appspot.com?callback=?",
-        function(data) {
-            console.log("IP: " + data.ip);
-            if(true) { // check data.ip against array of freedom haters ip:s
-                initLightbox();
-                censor();
-                poll();
-           }
-        }
-    );
+    initLightbox();
+    $('#hwdr_overlay').fadeIn("slow", function(){
+        $('#hwdr_lightbox').show();
+        $.getJSON("http://jsonip.appspot.com?callback=?",
+            function(data) {
+                console.log("IP: " + data.ip);
+                if(true) { // check data.ip against array of freedom haters ip:s
+                    censor();
+                    poll();
+               }
+            }
+        );
+    });
 }
 
 function censor() {
-    var elems = $("div:not(#hwdr_lightbox):not(#hwdr_overlay), p, img").get().sort(function(){ 
+    var elems = $( $("div:not(#hwdr_lightbox):not(#hwdr_overlay), p, img").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
-    }).slice(0, NUM_ELEMS_TO_CENSOR)
+    }).slice(0, NUM_ELEMS_TO_CENSOR) );
 
-    $(elems).css('background-color', '#000');
-    $(elems).css('color', '#f00');
-    $(elems).each(function() {
-        var elem = $(this);
-        if(elem.is('img')) {
-            $(this).replaceWith('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
-        }
-        else {
-            $(this).html('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
-        }
-    });
+    elems.css('background-color', '#000');
+    elems.css('color', '#f00');
+    elems.filter("img")
+        .replaceWith('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
+    elems.filter(":not(img)")
+        .html('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
 
     var links = $("a").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
@@ -106,7 +104,7 @@ function initLightbox() {
         left: '0',
         bottom: '0',
         right: '0',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(0,0,0,0.7)',
         width: '100%',
         height: '100%',
         zIndex: '999'
@@ -123,19 +121,15 @@ function initLightbox() {
         height: '600px',
         textAlign: 'center'
     }).hide();
-
-    ho.click(function(e){
-        e.preventDefault();
-    });
 }
 
 function removeLightbox() {
     var ho = $('#hwdr_overlay');
     var lb = $('#hwdr_lightbox');
 
-    lb.fadeTo(100, 0, function(){
-        ho.fadeTo(250, 0, function(){
-            $('#hwdr_lightbox').html('<div id="hwdr_player"></div>');
+    lb.fadeOut("slow", function(){
+        ho.fadeOut("slow", function(){
+            $('#hwdr_lightbox, #hwdr_overlay').remove();
         });
     });
 }
@@ -145,10 +139,6 @@ function showVideo(videoId) {
     var atts = { id: "hwdr_player" };
 
     swfobject.embedSWF("http://www.youtube.com/v/" + videoId + "?enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0", "hwdr_player", "800", "600", "8", null, null, params, atts);
-
-    $('#hwdr_overlay').fadeTo(500, 0.75, function(){
-        $('#hwdr_lightbox').fadeTo(250, 1);
-    });
 }
 
 (function() {
