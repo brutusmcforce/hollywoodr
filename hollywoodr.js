@@ -4,6 +4,9 @@ var $;
 var NUM_ELEMS_TO_CENSOR = 10;
 var NUM_LINKS_TO_CENSOR = 5;
 var AD_INTERVAL_IN_MINUTES = 1;
+var player,
+    random = Math.random,
+    floor = Math.floor;
 
 var stealACar = "HmZm8vNHBSU";
 var excellentTrailers = [
@@ -20,18 +23,36 @@ var excellentTrailers = [
     "AN_5fyHXy8Y"  // Crossover (2006)
 ];
 
+var queue = (function() {
+    var result = [stealACar];
+    for (var i = 0; i < 3; i++) {
+        var idx = floor(random() * excellentTrailers.length);
+        result.push(excellentTrailers[idx]);
+        excellentTrailers.splice(idx, 1);
+    }
+    console.log("play queue: ", result);
+    return result;
+})();
+
 function init() {
     $.getJSON("http://jsonip.appspot.com?callback=?",
         function(data) {
-            alert( "Your ip: " + data.ip);
+            //alert( "Your ip: " + data.ip);
             if(true) { // check data.ip against array of freedom haters ip:s
                 initLightbox();
-                showVideo(stealACar);
                 censor();
-                advertise();
+                var laststate = null;
+                setInterval(function() {
+                    var player = $("#hwdr_player")[0],
+                        state = null;
+                    if (player.getPlayerState && player.getPlayerState() == 0) {
+                        next();
+                    }
+                }, 300);
+                next();
            }
         }
-    });
+    );
 }
 
 function censor() {
@@ -61,13 +82,12 @@ function censor() {
     });
 }
 
-function advertise() {
-    var timer = setInterval(showAdvertisement, AD_INTERVAL_IN_MINUTES * 60000);
-
-    function showAdvertisement() {
-        console.log('lol');
-        showVideo(excellentTrailers[Math.floor(Math.random() * excellentTrailers.length)]);
+function next() {
+    if (!queue.length) {
+        return removeLightbox();
     }
+    showVideo(queue.shift());
+    console.log("Current queue: ", queue);
 }
 
 function initLightbox() {
@@ -101,7 +121,6 @@ function initLightbox() {
 
     ho.click(function(e){
         e.preventDefault();
-        removeLightbox();
     });
 }
 
@@ -165,10 +184,11 @@ function showVideo(videoId) {
         $(init);
     }
 
-    addLibs("http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js");
+    addLibs("//www.google.com/jsapi");
+    addLibs("//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js");
 
     if(typeof(swfobject) == "undefined") {
-        addLibs("http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
+        addLibs("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
     }
     })()
 })(window, document);
