@@ -12,7 +12,7 @@ function initLightbox() {
 
     $('body')
         .append('<div id="hwdr_overlay"></div>')
-        .append('<div id="hwdr_lightbox"><object width="100%" height="100%" id="hwdr_player"><param name="movie" value=""></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><param name="enablejsapi" value="1"></param><embed src="" type="application/x-shockwave-flash" width="100%" height="100%" allowscriptaccess="always" allowfullscreen="true"></embed></object></div>');
+        .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
 
     $('#hwdr_overlay').css('position', 'absolute');
     $('#hwdr_overlay').css('top', '0');
@@ -32,16 +32,20 @@ function initLightbox() {
     $('#hwdr_lightbox').css('height', '600px');
     $('#hwdr_lightbox').css('text-align', 'center');
     $('#hwdr_lightbox').hide();
+}
+
+function showVideo(url) {
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "hwdr_player" };
+
+    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=ytplayer&version=3",
+                       "hwdr_player", "425", "356", "8", null, null, params, atts);
 
     player = document.getElementById("hwdr_player");
     player.addEventListener("onStateChange", function(state) {
         alert(state);
     });
-}
 
-function showVideo(url) {
-    $('#hwdr_lightbox param[name="movie"]').val(url);
-    $('#hwdr_lightbox embed').attr('src', url + '&amp;autoplay=1&amp;controls=0');
     $('#hwdr_overlay').fadeTo(500, 0.75, function(){
         $('#hwdr_lightbox').fadeTo(250, 1);
     });
@@ -58,7 +62,7 @@ function showVideo(url) {
         }
     }
 
-    var addLibs = function() {
+    var addLibs = function(url) {
         var head = document.getElementsByTagName("head");
         if (head.length == 0) {
             if (attempts-- > 0) setTimeout(addLibs, 100);
@@ -66,8 +70,10 @@ function showVideo(url) {
         }
 
         var node = document.createElement("script");
-        node.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js";
+        node.src = url;
+
         head[0].appendChild(node);
+
         checkLibs();
     }
 
@@ -77,11 +83,16 @@ function showVideo(url) {
             return;
         }
         $ = jQuery.noConflict(true);
-        $(init);
         if (typeof old_jQuery == "undefined")
             jQuery = old_jQuery;
+
+        $(init);
     }
 
-    addLibs();
-})()
+    addLibs("http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js");
+
+    if(typeof(swfobject) == "undefined") {
+        addLibs("http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
+    }
+    })()
 })(window, document);
