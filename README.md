@@ -4,6 +4,6 @@ The script will check if user that is viewing the page is using an IP address th
 
 Put this on your page:
 
-```
+```xml
 <script src="https://raw.github.com/magnusvw/hollywoodr/master/hollywoodr.min.js"></script>
 ```
