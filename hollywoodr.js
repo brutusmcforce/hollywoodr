@@ -23,28 +23,35 @@ function initLightbox() {
     $('#hwdr_overlay').css('z-index', '999');
     $('#hwdr_overlay').hide();
 
-    $('#hwdr_lightbox').css('top', topPos + 'px');
-    $('#hwdr_lightbox').css('position', 'absolute');
-    $('#hwdr_lightbox').css('top', '0');
-    $('#hwdr_lightbox').css('left', '0');
-    $('#hwdr_lightbox').css('z-index', '1000');
-    $('#hwdr_lightbox').css('width', '800px');
-    $('#hwdr_lightbox').css('height', '600px');
-    $('#hwdr_lightbox').css('text-align', 'center');
-    $('#hwdr_lightbox').hide();
+    $('#hwdr_overlay').click(function(e){
+        e.preventDefault();
+        $('#hwdr_lightbox').fadeTo(100, 0, function(){
+            $(this).remove();
+            $('#hwdr_overlay').fadeTo(250, 0, function(){
+                $(this).remove();
+            });
+        });
+    });
+
+    var lb = $('#hwdr_lightbox');
+
+    lb.css('top', topPos + 'px');
+    lb.css('position', 'absolute');
+    lb.css('z-index', '1000');
+    lb.css('width', '800px');
+    lb.css('height', '600px');
+    lb.css('text-align', 'center');
+    lb.css('top', (($(window).height() - lb.outerHeight()) / 2) + $(window).scrollTop() + 'px');
+    lb.css('left', (($(window).width() - lb.outerWidth()) / 2) + $(window).scrollLeft() + 'px');
+    lb.hide();
 }
 
 function showVideo(url) {
-    var params = { allowScriptAccess: "always" };
+    var params = { allowScriptAccess: "always", autoplay: "1"};
     var atts = { id: "hwdr_player" };
 
-    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=ytplayer&version=3",
-                       "hwdr_player", "425", "356", "8", null, null, params, atts);
-
-    player = document.getElementById("hwdr_player");
-    player.addEventListener("onStateChange", function(state) {
-        alert(state);
-    });
+    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0",
+                       "hwdr_player", "640", "480", "8", null, null, params, atts);
 
     $('#hwdr_overlay').fadeTo(500, 0.75, function(){
         $('#hwdr_lightbox').fadeTo(250, 1);
