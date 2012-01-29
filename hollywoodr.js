@@ -9,6 +9,7 @@ var ads = [
     'http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0'
 ]
 
+var stealACar = "HmZm8vNHBSU";
 var excellentTrailers = [
     "qvfU5gzAmHg", // Titanic: The Legend Goes On... (2000)
     "bEOxyoJcNtM", // Superbabies: Baby Geniuses 2 (2004)
@@ -25,7 +26,7 @@ var excellentTrailers = [
 
 function init() {
     initLightbox();
-    showVideo("http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0");
+    showVideo("http://www.youtube.com/v/" + stealACar + "?version=3&amp;hl=en_US&amp;rel=0");
     censor();
     advertise();
 }
