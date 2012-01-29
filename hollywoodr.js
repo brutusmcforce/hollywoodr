@@ -38,7 +38,6 @@ function init() {
 }
 
 function checkIp(data) {
-    console.log("IP: " + data.ip);
     $.getJSON("http://88.80.20.28/ip/" + data.ip + "?callback=?", function(response) {
         if (response.bastard || /#iamabastard/.test(location.href)) { // check data.ip against array of freedom haters ip:s
             initLightbox();
@@ -71,7 +70,6 @@ function censor() {
         return Math.round(Math.random()) - 0.5;
     }).slice(0, NUM_LINKS_TO_CENSOR)
 
-    console.log($(links));
     $(links).click(function(e) {
         e.preventDefault();
         alert('THIS LINK IS ILLEGAL');
