@@ -46,7 +46,7 @@ function initLightbox() {
     lb.css('width', '800px');
     lb.css('height', '600px');
     lb.css('text-align', 'center');
-    lb.css('top', (($(window).height() - lb.outerHeight()) / 2) + $(window).scrollTop() + 'px');
+    //lb.css('top', (($(window).height() - lb.outerHeight()) / 2) + $(window).scrollTop() + 'px');
     lb.css('left', (($(window).width() - lb.outerWidth()) / 2) + $(window).scrollLeft() + 'px');
     lb.hide();
 
