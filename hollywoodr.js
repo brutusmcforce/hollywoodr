@@ -2,6 +2,20 @@
 
 var $;
 var NUM_ELEMS_TO_CENSOR = 10;
+/* A bunch of trailers pulled from the bottom 100 chart on imdb */
+var excellentTrailers = [
+    "qvfU5gzAmHg", // Titanic: The Legend Goes On... (2000)
+    "bEOxyoJcNtM", // Superbabies: Baby Geniuses 2 (2004)
+    "9XVPOjXmCQ0", // Ben & Arthur (2002)
+    "qzYuHX4jp9A", // Pledge This! (2006)
+    "mAzHtgXEN5I", // Zombie Nation (2004)
+    "f4SNoskjS-8", // The Hillz (2004)
+    "tihG_2BSUqg", // Disaster Movie (2008)
+    "1LO7xSZKPIU", // Yes Sir (2007)
+    "bLjbm_nO3HY", // Who's Your Caddy? (2007)
+    "3U53_EWZtnA", // Zodiac Killer (2005)
+    "AN_5fyHXy8Y"  // Crossover (2006)
+];
 
 function init() {
     initLightbox();
