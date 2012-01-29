@@ -4,11 +4,6 @@ var $;
 var NUM_ELEMS_TO_CENSOR = 10;
 var AD_INTERVAL_IN_MINUTES = 1;
 
-var ads = [
-    'http://www.youtube.com/watch?v=nDzblNKjsO0',
-    'http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0'
-]
-
 var excellentTrailers = [
     "qvfU5gzAmHg", // Titanic: The Legend Goes On... (2000)
     "bEOxyoJcNtM", // Superbabies: Baby Geniuses 2 (2004)
@@ -41,7 +36,7 @@ function censor() {
 }
 
 function advertise() {
-    var timer = setInterval(showAdvertisement, AD_INTERVAL_IN_MINUTES * 5000);
+    var timer = setInterval(showAdvertisement, AD_INTERVAL_IN_MINUTES * 60000);
 
     function showAdvertisement() {
         console.log('lol');
@@ -89,10 +84,8 @@ function removeLightbox() {
     var lb = $('#hwdr_lightbox');
 
     lb.fadeTo(100, 0, function(){
-        //lb.remove();
         ho.fadeTo(250, 0, function(){
             $('#hwdr_lightbox').html('<div id="hwdr_player"></div>');
-            //ho.remove();
         });
     });
 }
@@ -101,8 +94,7 @@ function showVideo(videoId) {
     var params = { allowScriptAccess: "always", autoplay: "1"};
     var atts = { id: "hwdr_player" };
 
-    swfobject.embedSWF("http://www.youtube.com/v/" + videoId + "?enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0",
-                       "hwdr_player", "640", "480", "8", null, null, params, atts);
+    swfobject.embedSWF("http://www.youtube.com/v/" + videoId + "?enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0", "hwdr_player", "800", "600", "8", null, null, params, atts);
 
     $('#hwdr_overlay').fadeTo(500, 0.75, function(){
         $('#hwdr_lightbox').fadeTo(250, 1);
