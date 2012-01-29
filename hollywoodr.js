@@ -138,7 +138,7 @@ function showVideo(videoId) {
     var params = { allowScriptAccess: "always", autoplay: "1"};
     var atts = { id: "hwdr_player" };
 
-    swfobject.embedSWF("http://www.youtube.com/v/" + videoId + "?enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0", "hwdr_player", "800", "600", "8", null, null, params, atts);
+    swfobject.embedSWF("http://www.youtube.com/v/" + videoId + "?enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0&disablekb=1", "hwdr_player", "800", "600", "8", null, null, params, atts);
 }
 
 (function() {
