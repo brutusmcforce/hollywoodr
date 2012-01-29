@@ -10,13 +10,14 @@ function init() {
 }
 
 function censor() {
-    var elems = $("div:not(#hwdr_lightbox), p, img").get().sort(function(){ 
+    var elems = $("div:not(#hwdr_lightbox):not(#hwdr_overlay), p, img").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
     }).slice(0, NUM_ELEMS_TO_CENSOR)
 
     $(elems).css('background-color', '#000');
     $(elems).css('color', '#f00');
     $(elems).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
+    });
 }
 
 function initLightbox() {
