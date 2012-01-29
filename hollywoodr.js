@@ -29,7 +29,7 @@ function initLightbox() {
         .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
 
     var ho = $('#hwdr_overlay');
-    ho.css('position', 'absolute');
+    ho.css('position', 'fixed');
     ho.css('top', '0');
     ho.css('left', '0');
     ho.css('background-color', '#000');
