@@ -1,6 +1,7 @@
 (function(window, document, undefined) {
 
 var $;
+var NUM_ELEMS_TO_CENSOR = 10;
 
 function init() {
     initLightbox();
@@ -11,12 +12,12 @@ function init() {
 function censor() {
     var elems = $("div:not(#hwdr_lightbox), p").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
-    }).slice(0,10)
+    }).slice(0, NUM_ELEMS_TO_CENSOR)
 
     $(elems).css('background-color', '#000');
     $(elems).css('color', '#f00');
     $(elems).each(function() {
-        $(this).html("<h1><blink>CENSORED</blink></h1>");
+        $(this).html('<h1 style="color:#f00;"><blink>CENSORED</blink></h1>');
     });
 }
 
