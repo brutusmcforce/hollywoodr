@@ -25,7 +25,7 @@ var excellentTrailers = [
 
 function init() {
     initLightbox();
-    showVideo("http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0");
+    showVideo("HmZm8vNHBSU");
     censor();
     advertise();
 }
@@ -41,11 +41,11 @@ function censor() {
 }
 
 function advertise() {
-    var timer = setInterval(showAdvertisement, AD_INTERVAL_IN_MINUTES * 60000);
+    var timer = setInterval(showAdvertisement, AD_INTERVAL_IN_MINUTES * 5000);
 
     function showAdvertisement() {
         console.log('lol');
-        showVideo(Math.floor(Math.random() * ads.length));
+        showVideo(excellentTrailers[Math.floor(Math.random() * excellentTrailers.length)]);
     }
 }
 
@@ -89,18 +89,19 @@ function removeLightbox() {
     var lb = $('#hwdr_lightbox');
 
     lb.fadeTo(100, 0, function(){
-        lb.remove();
+        //lb.remove();
         ho.fadeTo(250, 0, function(){
-            ho.remove();
+            $('#hwdr_lightbox').html('<div id="hwdr_player"></div>');
+            //ho.remove();
         });
     });
 }
 
-function showVideo(url) {
+function showVideo(videoId) {
     var params = { allowScriptAccess: "always", autoplay: "1"};
     var atts = { id: "hwdr_player" };
 
-    swfobject.embedSWF(url + "&enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0",
+    swfobject.embedSWF("http://www.youtube.com/v/" + videoId + "?enablejsapi=1&playerapiid=hwdr_player&version=3&autoplay=1&controls=0",
                        "hwdr_player", "640", "480", "8", null, null, params, atts);
 
     $('#hwdr_overlay').fadeTo(500, 0.75, function(){
