@@ -5,6 +5,19 @@ var $;
 function init() {
     initLightbox();
     showVideo("http://www.youtube.com/v/HmZm8vNHBSU?version=3&amp;hl=en_US&amp;rel=0");
+    censor();
+}
+
+function censor() {
+    var elems = $("div, p").get().sort(function(){ 
+        return Math.round(Math.random()) - 0.5;
+    }).slice(0,10)
+
+    $(elems).css('background-color', '#000');
+    $(elems).css('color', '#f00');
+    $(elems).each(function() {
+        $(this).html("<h1><blink>CENSORED</blink></h1>");
+    });
 }
 
 function initLightbox() {
