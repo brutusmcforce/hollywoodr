@@ -1,15 +1,15 @@
 (function(window, document, undefined) {
  
 var $;
-var NUM_ELEMS_TO_CENSOR = 10;
-var NUM_LINKS_TO_CENSOR = 5;
 var AD_INTERVAL_IN_MINUTES = 1;
 var player,
     random = Math.random,
     floor = Math.floor,
     timerId;
 
-var stealACar = "HmZm8vNHBSU";
+// thanks to http://www.youtube.com/user/prcouncil
+var stealACar = "KOJeXBzWmZw";
+
 var excellentTrailers = [
     "qvfU5gzAmHg", // Titanic: The Legend Goes On... (2000)
     "bEOxyoJcNtM", // Superbabies: Baby Geniuses 2 (2004)
@@ -43,58 +43,56 @@ function checkIp(data) {
             initLightbox();
             $('#hwdr_overlay').fadeIn("slow", function(){
                 $('#hwdr_lightbox').show();
-
                 censor();
+                showVideo(stealACar);
                 startPoll();
             }).click(function() {
-                queue = [];
-                next();
+                removeLightbox();
             });
         }
     });
 }
 
 function censor() {
-    var elems = $( $("div:not(#hwdr_lightbox):not(#hwdr_overlay), p, img").get().sort(function(){ 
-        return Math.round(Math.random()) - 0.5;
-    }).slice(0, NUM_ELEMS_TO_CENSOR) );
+    var elems = $("p, span, img").filter(function() {
+        return random() > 0.5;
+    });
+        
+    elems.css({
+        backgroundColor: '#000',
+        color: '#f00'
+    });
 
-    elems.css('background-color', '#000');
-    elems.css('color', '#f00');
     elems.filter("img")
         .replaceWith('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
     elems.filter(":not(img)")
         .html('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
 
-    var links = $("a").get().sort(function(){ 
-        return Math.round(Math.random()) - 0.5;
-    }).slice(0, NUM_LINKS_TO_CENSOR)
-
-    $(links).click(function(e) {
+    $("a").filter(function() {
+        return random() > 0.5;
+    }).click(function(e) {
         e.preventDefault();
         alert('THIS LINK IS ILLEGAL');
+    }).css({
+        color: '#f00',
+        textDecoration: 'line-through'
     });
 }
 
 function startPoll() {
     timerId = setInterval(function() {
-        var player = $("#hwdr_player")[0],
-            state = null;
-        if (player.getPlayerState && player.getPlayerState() == 0) {
-            next();
-        }
-    }, 300);
-    next();
-}
+        if($('#hwdr_overlay').length == 0) {
+            initLightbox();
 
-function next() {
-    if (queue.length == 0) {
-        clearTimeout(timerId);
-        return removeLightbox();
-    }
-    var id = queue[0];
-    queue.splice(0, 1);
-    showVideo(id);
+            $('#hwdr_overlay').fadeIn("slow", function(){
+                $('#hwdr_lightbox').show();
+            }).click(function() {
+                removeLightbox();
+            });
+        }
+
+        showVideo(excellentTrailers[Math.floor(Math.random() * excellentTrailers.length)]);
+    }, AD_INTERVAL_IN_MINUTES * 60000);
 }
 
 function initLightbox() {
