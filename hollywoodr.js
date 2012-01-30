@@ -129,12 +129,12 @@ function initLightbox() {
 }
 
 function removeLightbox() {
-    var ho = $('#hwdr_overlay');
-    var lb = $('#hwdr_lightbox');
+    var ho = hw_jq('#hwdr_overlay');
+    var lb = hw_jq('#hwdr_lightbox');
 
     lb.fadeOut("slow", function(){
         ho.fadeOut("slow", function(){
-            $('#hwdr_lightbox, #hwdr_overlay').remove();
+            hw_jq('#hwdr_lightbox, #hwdr_overlay').remove();
         });
     });
 }
