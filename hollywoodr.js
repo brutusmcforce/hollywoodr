@@ -154,7 +154,6 @@ function showVideo(videoId) {
     }
 
     function loadScript(src, callback) {
-        var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.onreadystatechange = function () {
@@ -165,7 +164,7 @@ function showVideo(videoId) {
 
         script.onload = callback;
         script.src = src;
-        head.appendChild(script);
+        document.body.appendChild(script);
     }
 
     function isjQueryLoaded() {
