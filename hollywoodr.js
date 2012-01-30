@@ -150,10 +150,7 @@ function showVideo(videoId) {
     if (typeof(swfobject) == "undefined") {
         var swfobj = document.createElement("script");
         swfobj.src = "//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js";
-        swfobj.onload = function() {
-            loadedSwfobject = true;
-            checkDependencies();
-        }
+
         document.body.appendChild(swfobj);
     }
 
