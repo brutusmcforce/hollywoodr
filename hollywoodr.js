@@ -152,22 +152,49 @@ function showVideo(videoId) {
         swfobj.src = "//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js";
         swfobj.onload = function() {
             loadedSwfobject = true;
+            checkDependencies();
         }
         document.body.appendChild(swfobj);
-    } 
+    }
 
-
-    if (!window.jQuery) {
-        var jq = document.createElement("script");
-        jq.src = "//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js";
-        jq.onload = function() {
-            $ = jQuery.noConflict(true);
-            $(init);
+    function loadScript(src, callback) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.onreadystatechange = function () {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+                callback();
+            }
         }
 
-        document.body.appendChild(jq);
-    } else {
-        $(init);
+        script.onload = callback;
+        script.src = src;
+        head.appendChild(script);
     }
+
+    function isjQueryLoaded() {
+        return (typeof jQuery !== 'undefined');
+    }
+
+    function tryLoadChain() {
+        var chain = arguments;
+        if (!isjQueryLoaded()) {
+            if (chain.length) {
+                loadScript(
+                    chain[0],
+                    function() {
+                        tryLoadChain.apply(this, Array.prototype.slice.call(chain, 1));
+                    }
+                );
+            } else {
+                console.log("not loaded...");
+            }
+        } else {
+            $(init);
+        }
+    }
+
+    tryLoadChain('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
+
 })()
 })(window, document);
