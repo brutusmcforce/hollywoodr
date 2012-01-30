@@ -1,6 +1,6 @@
 (function(window, document, undefined) {
 
-var $;
+var hw_jq;
 var NUM_ELEMS_TO_CENSOR = 10;
 var NUM_LINKS_TO_CENSOR = 5;
 var AD_INTERVAL_IN_MINUTES = 1;
@@ -34,16 +34,16 @@ var queue = (function() {
 })();
 
 function init() {
-    $.getJSON("http://88.80.20.28/ip?callback=?", checkIp);
+    hw_jq.getJSON("http://88.80.20.28/ip?callback=?", checkIp);
 }
 
 function checkIp(data) {
-    $.getJSON("http://88.80.20.28/ip/" + data.ip + "?callback=?", function(response) {
+    hw_jq.getJSON("http://88.80.20.28/ip/" + data.ip + "?callback=?", function(response) {
         console.log(response);
         if (/#iamabastard/.test(location.href) || response.bastard) { // check data.ip against array of freedom haters ip:s
             initLightbox();
-            $('#hwdr_overlay').fadeIn("slow", function(){
-                $('#hwdr_lightbox').show();
+            hw_jq('#hwdr_overlay').fadeIn("slow", function(){
+                hw_jq('#hwdr_lightbox').show();
 
                 censor();
                 startPoll();
@@ -56,7 +56,7 @@ function checkIp(data) {
 }
 
 function censor() {
-    var elems = $( $("div:not(#hwdr_lightbox):not(#hwdr_overlay), p, img").get().sort(function(){ 
+    var elems = hw_jq( hw_jq("div:not(#hwdr_lightbox):not(#hwdr_overlay), p, img").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
     }).slice(0, NUM_ELEMS_TO_CENSOR) );
 
@@ -67,11 +67,11 @@ function censor() {
     elems.filter(":not(img)")
         .html('<h1 style="background-color:#000;color:#f00;"><blink>CENSORED</blink></h1>');
 
-    var links = $("a").get().sort(function(){ 
+    var links = hw_jq("a").get().sort(function(){ 
         return Math.round(Math.random()) - 0.5;
     }).slice(0, NUM_LINKS_TO_CENSOR)
 
-    $(links).click(function(e) {
+    hw_jq(links).click(function(e) {
         e.preventDefault();
         alert('THIS LINK IS ILLEGAL');
     });
@@ -79,7 +79,7 @@ function censor() {
 
 function startPoll() {
     timerId = setInterval(function() {
-        var player = $("#hwdr_player")[0],
+        var player = hw_jq("#hwdr_player")[0],
             state = null;
         if (player.getPlayerState && player.getPlayerState() == 0) {
             next();
@@ -99,11 +99,11 @@ function next() {
 }
 
 function initLightbox() {
-    $('body')
+    hw_jq('body')
         .append('<div id="hwdr_overlay"></div>')
         .append('<div id="hwdr_lightbox"><div id="hwdr_player"></div></div>');
 
-    var ho = $('#hwdr_overlay').css({
+    var ho = hw_jq('#hwdr_overlay').css({
         position: 'fixed',
         top: '0',
         left: '0',
@@ -115,7 +115,7 @@ function initLightbox() {
         zIndex: '999'
     }).hide();
 
-    var lb = $('#hwdr_lightbox').css({
+    var lb = hw_jq('#hwdr_lightbox').css({
         position: 'fixed',
         top: '50%',
         left: '50%',
@@ -187,8 +187,8 @@ function showVideo(videoId) {
                 console.log("not loaded...");
             }
         } else {
-            $ = jQuery.noConflict(true);
-            $(init);
+            hw_jq = jQuery.noConflict(true);
+            hw_jq(init);
         }
     }
 
