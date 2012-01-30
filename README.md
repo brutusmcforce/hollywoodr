@@ -11,6 +11,12 @@ Features
 - Protects the content owner from potentially illegal and dangerous content!
 - Seamless removal of illegal links!
 
+Test
+----
+
+<a href="http://magnusvw.github.com/hollywoodr/">Go to our Github page to see
+the script in action</a>
+
 Usage
 -----
 
