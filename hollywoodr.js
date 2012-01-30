@@ -23,16 +23,6 @@ var excellentTrailers = [
     "AN_5fyHXy8Y"  // Crossover (2006)
 ];
 
-var queue = (function() {
-    var result = [stealACar];
-    for (var i = 0; i < 3; i++) {
-        var idx = floor(random() * excellentTrailers.length);
-        result.push(excellentTrailers[idx]);
-        excellentTrailers.splice(idx, 1);
-    }
-    return result;
-})();
-
 function init() {
     $.getJSON("http://88.80.20.28/ip?callback=?", checkIp);
 }
@@ -76,7 +66,7 @@ function censor() {
     }).css({
         color: '#f00',
         textDecoration: 'line-through'
-    });
+    }).attr('href', '#');
 }
 
 function startPoll() {
