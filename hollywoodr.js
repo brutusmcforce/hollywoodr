@@ -145,7 +145,6 @@ function showVideo(videoId) {
 
     function loadScript(src, callback) {
         var script = document.createElement('script');
-        script.type = 'text/javascript';
         script.onreadystatechange = function () {
             if (this.readyState == 'complete' || this.readyState == 'loaded') {
                 callback();
