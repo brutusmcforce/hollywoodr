@@ -1,5 +1,5 @@
 (function(window, document, undefined) {
-
+ 
 var $;
 var NUM_ELEMS_TO_CENSOR = 10;
 var NUM_LINKS_TO_CENSOR = 5;
