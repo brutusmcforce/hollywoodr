@@ -146,11 +146,13 @@ function showVideo(videoId) {
 }
 
 (function() {
+    var head = document.getElementsByTagName('head')[0];
+
     if (typeof(swfobject) == "undefined") {
         var swfobj = document.createElement("script");
         swfobj.src = "//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js";
 
-        document.body.appendChild(swfobj);
+        head.appendChild(swfobj);
     }
 
     function loadScript(src, callback) {
@@ -164,7 +166,7 @@ function showVideo(videoId) {
 
         script.onload = callback;
         script.src = src;
-        document.body.appendChild(script);
+        head.appendChild(script);
     }
 
     function isjQueryLoaded() {
