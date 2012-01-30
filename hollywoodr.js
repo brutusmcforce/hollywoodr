@@ -187,7 +187,7 @@ function showVideo(videoId) {
                 console.log("not loaded...");
             }
         } else {
-            hw_jq = jQuery.noConflict(true);
+            hw_jq = jQuery.noConflict(false);
             hw_jq(init);
         }
     }
