@@ -14,7 +14,7 @@ Features
 Test
 ----
 
-<a href="http://magnusvw.github.com/hollywoodr/">Go to our Github page to see
+<a href="https://brutusmcforce.github.io/hollywoodr/">Go to our Github page to see
 the script in action</a>
 
 Usage
@@ -23,7 +23,7 @@ Usage
 Put this in your markup:
 
 ```xml
-<script src="https://raw.github.com/magnusvw/hollywoodr/master/hollywoodr.min.js"></script>
+<script src="https://raw.github.com/brutusmcforce/hollywoodr/master/hollywoodr.min.js"></script>
 ```
 
 How it works
